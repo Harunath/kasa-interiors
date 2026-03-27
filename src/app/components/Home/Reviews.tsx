@@ -60,28 +60,139 @@ const slideVariants: Variants = {
 
 const REVIEWS = [
 	{
-		name: "Rohit & Sneha",
-		role: "3BHK Apartment · Gachibowli",
+		name: "G. Vekataramana",
+		role: "Vice President, Glenmark Pharmaceuticals · Villa · Sainikpuri, Hyderabad",
 		quote:
-			"Kasa Interiors translated our ideas into a home that feels elegant yet easy to live in. Every detail, from lighting to storage, has been thoughtfully planned.",
+			"Kasa Interiors delivered a refined and sophisticated design for our villa. Their attention to detail, material selection, and execution quality truly stand out. The entire journey from concept to completion was seamless.",
 		avatar: "",
 	},
 	{
-		name: "Anita Sharma",
-		role: "Villa Interiors · Kompally",
+		name: "C.S. Rao",
+		role: "MD, Sanco Infra Projects · Ankura Villa, Hyderabad",
 		quote:
-			"The team handled design, execution and coordination end-to-end. Timelines were clear, finishes were premium and the final result matched the 3D visuals.",
+			"Professional, reliable, and extremely detail-oriented. Kasa Interiors transformed our home into a modern, functional, and elegant space.",
 		avatar: "",
 	},
 	{
-		name: "Harish & Co.",
-		role: "Office & Studio · Banjara Hills",
+		name: "Raghuram Reddy",
+		role: "Villa · ACS Prime, Mokila, Hyderabad",
 		quote:
-			"They created a workspace that reflects our brand and works for day-to-day operations. The balance of aesthetics and practicality really stands out.",
+			"From planning to execution, everything was smooth and transparent. The final result exceeded our expectations.",
+		avatar: "",
+	},
+	{
+		name: "Rackesh",
+		role: "Villa · ACS Prime, Mokila, Hyderabad",
+		quote:
+			"Excellent craftsmanship and premium finish. Highly recommended for luxury villa interiors.",
+		avatar: "",
+	},
+	{
+		name: "Dr. Anfas",
+		role: "Paediatrician · Triplex House, Rajendranagar, Hyderabad",
+		quote:
+			"They created a calming and beautifully designed space that perfectly suits our lifestyle. Great attention to comfort and aesthetics.",
+		avatar: "",
+	},
+	{
+		name: "Srinivas",
+		role: "Villa · Gem Estrella, Kollur, Hyderabad",
+		quote:
+			"Timely delivery and high-quality finishing. The team handled everything professionally from start to end.",
+		avatar: "",
+	},
+	{
+		name: "Srikan Puja",
+		role: "Apartment · Aparna Luxor Park, Hyderabad",
+		quote:
+			"Our apartment now feels luxurious yet practical. Loved the smart storage and clean design approach.",
+		avatar: "",
+	},
+	{
+		name: "Vijay & Shyamala",
+		role: "Apartment · Bollineni Bion, Hyderabad",
+		quote:
+			"The entire process was handled smoothly with clear communication. The outcome exceeded our expectations.",
+		avatar: "",
+	},
+	{
+		name: "Nagesh",
+		role: "Apartment · Bollineni Bion, Hyderabad",
+		quote:
+			"Clean execution, elegant design, and strong attention to detail. A great experience overall.",
+		avatar: "",
+	},
+	{
+		name: "Dr. Narsh",
+		role: "Triplex Villa · Jadcherla",
+		quote:
+			"A perfect blend of functionality and aesthetics. Very satisfied with the outcome.",
+		avatar: "",
+	},
+	{
+		name: "Ravi",
+		role: "Apartment · Vasavi Metropolis, Hyderabad",
+		quote:
+			"Kasa Interiors brought clarity to our ideas and executed everything beautifully.",
+		avatar: "",
+	},
+	{
+		name: "Samantha",
+		role: "Apartment · Vasavi Metropolis, Hyderabad",
+		quote:
+			"Loved the detailing and finishing. Every corner feels thoughtfully designed.",
+		avatar: "",
+	},
+	{
+		name: "Rajesh",
+		role: "Apartment · Trident Namsree, Hyderabad",
+		quote:
+			"Premium quality work with a modern design approach. Highly professional team.",
+		avatar: "",
+	},
+	{
+		name: "Subbareddy",
+		role: "Villa · Hallmark Villas, Velimala, Hyderabad",
+		quote: "Excellent coordination and execution. The villa looks stunning.",
+		avatar: "",
+	},
+	{
+		name: "Raghava",
+		role: "Apartment · Sunshine Destino, Kokapet, Hyderabad",
+		quote: "Very impressed with the design planning and overall finish.",
+		avatar: "",
+	},
+	{
+		name: "Dr. Mohan Maharaj",
+		role: "HOD, Critical Care · Apollo Hospitals, Visakhapatnam",
+		quote: "A perfect combination of luxury and comfort. Highly recommended.",
+		avatar: "",
+	},
+	{
+		name: "Dr. Rani",
+		role: "HOD, Critical Care · Visakhapatnam",
+		quote: "Elegant, functional, and beautifully executed interiors.",
+		avatar: "",
+	},
+	{
+		name: "Usha",
+		role: "Apartment · Skypark, Visakhapatnam",
+		quote: "Attention to detail and finishing quality is excellent.",
+		avatar: "",
+	},
+	{
+		name: "Suryanarayana",
+		role: "Apartment · Skypark, Visakhapatnam",
+		quote: "Trustworthy team with great design sense and execution.",
+		avatar: "",
+	},
+	{
+		name: "Shyam Sundar",
+		role: "Apartment · Skypark, Visakhapatnam",
+		quote: "Very satisfied with the overall experience and final output.",
 		avatar: "",
 	},
 ];
-
 export default function Reviews() {
 	const [activeIndex, setActiveIndex] = useState(0);
 

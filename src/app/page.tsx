@@ -9,7 +9,7 @@ import WhyKasa from "./components/Home/whyKasa";
 import Steps from "./components/Home/Steps";
 // import BrandsWeUse from "./components/Home/BrandsWeUse";
 import InteriorSolutions from "./components/Home/InteriorSolutions";
-import FeaturedProjects from "./components/project/FeaturedProjects";
+// import FeaturedProjects from "./components/project/FeaturedProjects";
 
 function page() {
 	return (
@@ -22,7 +22,7 @@ function page() {
 			<Steps />
 			<InteriorSolutions />
 			<WhyKasa />
-			<FeaturedProjects />
+			{/* <FeaturedProjects /> */}
 			<Reviews />
 			{/* <BrandsWeUse /> */}
 		</>
