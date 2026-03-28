@@ -225,31 +225,6 @@ export default function WhatWeDoSection() {
 											</li>
 										))}
 									</ul>
-
-									{/* CTA Button - visible on all screen sizes */}
-									<Link href={activeService.href}>
-										<motion.button
-											whileHover={{ scale: 1.04, y: -2 }}
-											whileTap={{ scale: 0.96 }}
-											className="
-                        mt-2
-                        inline-flex items-center justify-center gap-2
-                        rounded-full
-                        border border-white/70
-                        bg-white/95
-                        px-4 py-2
-                        text-[0.78rem] font-semibold uppercase tracking-[0.22em]
-                        text-slate-900
-                        shadow-[0_4px_18px_rgba(0,0,0,0.25)]
-                        backdrop-blur-sm
-                        sm:mt-0
-                      ">
-											{activeService.cta}
-											<span className="text-xs" style={{ color: ACCENT }}>
-												↗
-											</span>
-										</motion.button>
-									</Link>
 								</div>
 							</div>
 						</div>

@@ -131,21 +131,6 @@ export default function OurServicesBanner() {
 										</div>
 
 										{/* CTA + bottom bar */}
-										<div className="mt-4">
-											<div className="flex items-center justify-between">
-												<span className="text-[0.75rem] font-semibold uppercase tracking-[0.18em] text-slate-700 group-hover:text-[#447f80] transition-colors">
-													Explore Category
-												</span>
-
-												<div className="flex h-8 w-8 items-center justify-center rounded-full border border-[#447f80]/40 text-[#447f80] group-hover:bg-[#447f80] group-hover:text-white transition-colors">
-													↗
-												</div>
-											</div>
-
-											<div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-slate-100">
-												<div className="h-full w-0 rounded-full bg-[#447f80] transition-all duration-300 group-hover:w-full" />
-											</div>
-										</div>
 									</div>
 								</motion.article>
 							</Link>
