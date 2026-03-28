@@ -2,16 +2,20 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { FiMail, FiPhone, FiMapPin, FiInstagram } from "react-icons/fi";
-
-const ACCENT = "#447f80";
+import {
+	FiMail,
+	FiPhone,
+	FiMapPin,
+	FiInstagram,
+	FiFacebook,
+} from "react-icons/fi";
 
 export default function Footer() {
 	return (
 		<footer className="w-full border-t border-[#5fa1a2] bg-[#447f80]">
 			<div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
 				<div className="grid gap-8 md:grid-cols-4">
-					{/* Logo + Short Line */}
+					{/* Logo */}
 					<div className="space-y-3">
 						<div className="relative h-10 w-32 bg-white py-4 px-3 rounded-2xl">
 							<Image
@@ -26,7 +30,7 @@ export default function Footer() {
 						</p>
 					</div>
 
-					{/* Quick Links */}
+					{/* Menu */}
 					<div>
 						<h4 className="text-xs font-semibold uppercase tracking-[0.2em] text-white">
 							Menu
@@ -119,19 +123,36 @@ export default function Footer() {
 				</div>
 
 				{/* Bottom bar */}
-				<div className="mt-8 flex flex-col items-center justify-between gap-3 border-t border-[#5fa1a2] pt-4 text-[12px] text-slate-200 sm:flex-row">
+				<div className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-[#5fa1a2] pt-4 text-[12px] text-slate-200 sm:flex-row">
 					<p>
 						© {new Date().getFullYear()} Kasa Interiors. All rights reserved.
 					</p>
+					{/* HSDev Branding */}
+					<div className="flex items-center gap-1 text-slate-200">
+						<span>Developed by</span>
 
+						<a
+							href="https://hsdev.in"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="font-semibold hover:text-white transition">
+							HSDev
+						</a>
+					</div>
 					<div className="flex items-center gap-4">
 						<Link
-							href="https://instagram.com"
-							className="flex items-center gap-1 text-slate-200 hover:text-white transition">
+							href="https://www.instagram.com/kasa_interiors_hyd?igsh=MXJwaGwxc2xrdmhjeQ%3D%3D&utm_source=qr"
+							target="_blank"
+							className="hover:text-white transition">
 							<FiInstagram className="text-lg" />
 						</Link>
 
-						<p>Hyderabad · Vijayawada · Vishakapatnam</p>
+						<Link
+							href="https://www.facebook.com/share/1Dft67KmbD/"
+							target="_blank"
+							className="hover:text-white transition">
+							<FiFacebook className="text-lg" />
+						</Link>
 					</div>
 				</div>
 			</div>
