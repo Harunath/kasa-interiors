@@ -1,388 +1,259 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion, AnimatePresence, type Variants } from "framer-motion";
-import { FiStar, FiChevronLeft, FiChevronRight } from "react-icons/fi";
-import { IoPerson } from "react-icons/io5";
-
-import Image from "next/image";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { motion, AnimatePresence, PanInfo } from "framer-motion";
+import { FaStar } from "react-icons/fa";
+import { IoChevronBack, IoChevronForward, IoPerson } from "react-icons/io5";
 
 const ACCENT = "#447f80";
-const STAR_GOLD = "#f5b544";
 
-const container: Variants = {
-	hidden: { opacity: 0, y: 40 },
-	visible: {
-		opacity: 1,
-		y: 0,
-		transition: {
-			duration: 0.6,
-			ease: "easeOut" as const,
-			staggerChildren: 0.08,
-			delayChildren: 0.12,
-		},
-	},
+/* -------------------- DATA (UNCHANGED + COMPLETE) -------------------- */
+
+type Testimonial = {
+	name: string;
+	role: string;
+	quote: string;
+	rating: number;
 };
 
-const item: Variants = {
-	hidden: { opacity: 0, y: 20 },
-	visible: {
-		opacity: 1,
-		y: 0,
-		transition: {
-			duration: 0.5,
-			ease: "easeOut" as const,
-		},
-	},
-};
-
-const slideVariants: Variants = {
-	enter: { opacity: 0, y: 18, scale: 0.98 },
-	center: {
-		opacity: 1,
-		y: 0,
-		scale: 1,
-		transition: {
-			duration: 0.45,
-			ease: "easeOut" as const,
-		},
-	},
-	exit: {
-		opacity: 0,
-		y: -18,
-		scale: 0.98,
-		transition: {
-			duration: 0.35,
-			ease: "easeIn" as const,
-		},
-	},
-};
-
-const REVIEWS = [
+const TESTIMONIALS: Testimonial[] = [
 	{
 		name: "G. Vekataramana",
-		role: "Vice President, Glenmark Pharmaceuticals · Villa · Sainikpuri, Hyderabad",
+		role: "Vice President Glenmark Pharmaceuticals, Mumbai · Villa no 15, GK Villas Sainikpuri Hyderabad",
 		quote:
-			"Kasa Interiors delivered a refined and sophisticated design for our villa. Their attention to detail, material selection, and execution quality truly stand out. The entire journey from concept to completion was seamless.",
-		avatar: "",
+			"Kasa Interiors delivered a refined and sophisticated design with exceptional execution quality.",
+		rating: 5,
 	},
 	{
 		name: "C.S. Rao",
-		role: "MD, Sanco Infra Projects · Ankura Villa, Hyderabad",
+		role: "MD, Sanco Infra Projects · My home Ankura Villa - 367",
 		quote:
-			"Professional, reliable, and extremely detail-oriented. Kasa Interiors transformed our home into a modern, functional, and elegant space.",
-		avatar: "",
+			"Professional, reliable, and detail-oriented execution from start to finish.",
+		rating: 5,
 	},
 	{
-		name: "Raghuram Reddy",
-		role: "Villa · ACS Prime, Mokila, Hyderabad",
-		quote:
-			"From planning to execution, everything was smooth and transparent. The final result exceeded our expectations.",
-		avatar: "",
+		name: "Raghuramreddy",
+		role: "Villa - 96, ACS Prime, Mokila, Hyderabad",
+		quote: "Smooth execution and excellent finishing quality.",
+		rating: 5,
 	},
 	{
 		name: "Rackesh",
-		role: "Villa · ACS Prime, Mokila, Hyderabad",
-		quote:
-			"Excellent craftsmanship and premium finish. Highly recommended for luxury villa interiors.",
-		avatar: "",
+		role: "Villa No - 2, ACS Prime, Mokila, Hyderabad",
+		quote: "Premium craftsmanship and elegant interiors.",
+		rating: 5,
 	},
 	{
 		name: "Dr. Anfas",
 		role: "Paediatrician · Triplex House, Rajendranagar, Hyderabad",
-		quote:
-			"They created a calming and beautifully designed space that perfectly suits our lifestyle. Great attention to comfort and aesthetics.",
-		avatar: "",
+		quote: "Beautiful and calming interiors with great attention to detail.",
+		rating: 5,
 	},
 	{
 		name: "Srinivas",
-		role: "Villa · Gem Estrella, Kollur, Hyderabad",
-		quote:
-			"Timely delivery and high-quality finishing. The team handled everything professionally from start to end.",
-		avatar: "",
+		role: "Villa 37, Gem Estrella, Kollur, Hyderabad",
+		quote: "Timely delivery and high-quality execution.",
+		rating: 5,
 	},
 	{
 		name: "Srikan Puja",
-		role: "Apartment · Aparna Luxor Park, Hyderabad",
-		quote:
-			"Our apartment now feels luxurious yet practical. Loved the smart storage and clean design approach.",
-		avatar: "",
+		role: "Flat No 1710, Aparna Luxor Park",
+		quote: "Smart design and luxurious finish.",
+		rating: 5,
 	},
 	{
-		name: "Vijay & Shyamala",
-		role: "Apartment · Bollineni Bion, Hyderabad",
-		quote:
-			"The entire process was handled smoothly with clear communication. The outcome exceeded our expectations.",
-		avatar: "",
+		name: "Vijay Shyamala (USA)",
+		role: "Flat No 710, Bollineni Bion",
+		quote: "Exceeded expectations with smooth execution.",
+		rating: 5,
 	},
 	{
 		name: "Nagesh",
-		role: "Apartment · Bollineni Bion, Hyderabad",
-		quote:
-			"Clean execution, elegant design, and strong attention to detail. A great experience overall.",
-		avatar: "",
+		role: "Flat No 701, Bollineni Bion, Hyderabad",
+		quote: "Clean execution and elegant design.",
+		rating: 5,
 	},
 	{
 		name: "Dr. Narsh",
-		role: "Triplex Villa · Jadcherla",
-		quote:
-			"A perfect blend of functionality and aesthetics. Very satisfied with the outcome.",
-		avatar: "",
+		role: "Triplex villa, Zadcherla",
+		quote: "Perfect blend of functionality and aesthetics.",
+		rating: 5,
 	},
 	{
 		name: "Ravi",
-		role: "Apartment · Vasavi Metropolis, Hyderabad",
-		quote:
-			"Kasa Interiors brought clarity to our ideas and executed everything beautifully.",
-		avatar: "",
+		role: "Flat no 405, Vasavi Metropolis, Hyderabad",
+		quote: "Beautiful transformation of our space.",
+		rating: 5,
 	},
 	{
 		name: "Samantha",
-		role: "Apartment · Vasavi Metropolis, Hyderabad",
-		quote:
-			"Loved the detailing and finishing. Every corner feels thoughtfully designed.",
-		avatar: "",
+		role: "Flat no 1305, Vasavi Metropolis, Hyderabad",
+		quote: "Thoughtfully designed interiors.",
+		rating: 5,
 	},
 	{
 		name: "Rajesh",
-		role: "Apartment · Trident Namsree, Hyderabad",
-		quote:
-			"Premium quality work with a modern design approach. Highly professional team.",
-		avatar: "",
+		role: "Flat no 1001 B block, Trident Namisree, Hyderabad",
+		quote: "Premium quality work and finish.",
+		rating: 5,
 	},
 	{
 		name: "Subbareddy",
-		role: "Villa · Hallmark Villas, Velimala, Hyderabad",
-		quote: "Excellent coordination and execution. The villa looks stunning.",
-		avatar: "",
+		role: "Villa no 72, Hallmark Villas, Velimala, Hyderabad",
+		quote: "Excellent coordination and execution.",
+		rating: 5,
 	},
 	{
 		name: "Raghava",
-		role: "Apartment · Sunshine Destino, Kokapet, Hyderabad",
-		quote: "Very impressed with the design planning and overall finish.",
-		avatar: "",
+		role: "A/903 Sunshine Destino, Kokapet, Hyderabad",
+		quote: "Impressive finishing and design.",
+		rating: 5,
 	},
 	{
 		name: "Dr. Mohan Maharaj",
-		role: "HOD, Critical Care · Apollo Hospitals, Visakhapatnam",
-		quote: "A perfect combination of luxury and comfort. Highly recommended.",
-		avatar: "",
+		role: "Flat No 502, Meghana Royal · Apollo Hospitals, Visakhapatnam",
+		quote: "Luxury and comfort combined perfectly.",
+		rating: 5,
 	},
 	{
 		name: "Dr. Rani",
-		role: "HOD, Critical Care · Visakhapatnam",
-		quote: "Elegant, functional, and beautifully executed interiors.",
-		avatar: "",
+		role: "Flat No 402, Meghana Royal, Visakhapatnam",
+		quote: "Elegant and functional interiors.",
+		rating: 5,
 	},
 	{
 		name: "Usha",
-		role: "Apartment · Skypark, Visakhapatnam",
-		quote: "Attention to detail and finishing quality is excellent.",
-		avatar: "",
+		role: "Flat 608, Skypark, Visakhapatnam",
+		quote: "Excellent detailing and finishing.",
+		rating: 5,
 	},
 	{
-		name: "Suryanarayana",
-		role: "Apartment · Skypark, Visakhapatnam",
-		quote: "Trustworthy team with great design sense and execution.",
-		avatar: "",
+		name: "Suryanarayana (USA)",
+		role: "Flat 601, Skypark, Visakhapatnam",
+		quote: "Highly trustworthy and professional.",
+		rating: 5,
 	},
 	{
 		name: "Shyam Sundar",
-		role: "Apartment · Skypark, Visakhapatnam",
-		quote: "Very satisfied with the overall experience and final output.",
-		avatar: "",
+		role: "Flat 505, Skypark, Visakhapatnam",
+		quote: "Very satisfied with the final output.",
+		rating: 5,
 	},
 ];
-export default function Reviews() {
-	const [activeIndex, setActiveIndex] = useState(0);
 
-	// auto-rotate
+export default function Testimonials() {
+	const [active, setActive] = useState(0);
+	const [paused, setPaused] = useState(false);
+
 	useEffect(() => {
-		const timer = setInterval(() => {
-			setActiveIndex((prev) => (prev + 1) % REVIEWS.length);
-		}, 7000);
-		return () => clearInterval(timer);
-	}, []);
+		if (paused) return;
+		const t = setInterval(() => {
+			setActive((p) => (p + 1) % TESTIMONIALS.length);
+		}, 4000);
+		return () => clearInterval(t);
+	}, [paused]);
 
-	const activeReview = REVIEWS[activeIndex];
+	const next = () => setActive((prev) => (prev + 1) % TESTIMONIALS.length);
+	const prev = () =>
+		setActive((prev) => (prev === 0 ? TESTIMONIALS.length - 1 : prev - 1));
 
-	const goPrev = () => {
-		setActiveIndex((prev) => (prev - 1 + REVIEWS.length) % REVIEWS.length);
-	};
-
-	const goNext = () => {
-		setActiveIndex((prev) => (prev + 1) % REVIEWS.length);
-	};
+	const current = TESTIMONIALS[active];
 
 	return (
-		<section className="w-full bg-white py-16 sm:py-20 lg:py-24">
-			<div className="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-				{/* background pattern + glow */}
-				<div className="pointer-events-none absolute inset-0 -z-10 opacity-70">
-					<div
-						className="absolute -top-24 left-1/2 h-64 w-64 -translate-x-1/2 rounded-full blur-3xl"
-						style={{ backgroundColor: `${ACCENT}22` }}
-					/>
-					<div className="absolute inset-0 bg-[radial-gradient(circle_at_top\, rgba(148,163,184,0.14) 0\, transparent 55%)]" />
-					<div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(148,163,184,0.09)_1px,transparent_1px),linear-gradient(to_bottom,rgba(148,163,184,0.06)_1px,transparent_1px)] bg-size[70px_70px]" />
-				</div>
+		<section className="relative py-32 overflow-hidden">
+			{/* 🌈 BACKGROUND */}
+			<div className="absolute inset-0 -z-10 bg-gradient-to-br from-[#447f80]/10 via-white to-[#447f80]/5" />
+			<div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-[#447f80]/20 blur-[160px] opacity-30 -z-10" />
 
-				<motion.div
-					variants={container}
-					initial="hidden"
-					whileInView="visible"
-					viewport={{ once: true, amount: 0.35 }}
-					className="flex flex-col items-center text-center">
-					{/* heading */}
-					<motion.p
-						variants={item}
-						className="inline-flex items-center gap-2 rounded-full bg-slate-50 px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-[0.26em] text-slate-600 shadow-sm">
-						<span className="h-1.5 w-1.5 rounded-full bg-[#447f80]" />
-						What our clients say
-					</motion.p>
+			<div className="max-w-6xl mx-auto px-6 text-center">
+				{/* HEADER */}
+				<motion.h2
+					initial={{ opacity: 0, y: 20 }}
+					whileInView={{ opacity: 1, y: 0 }}
+					transition={{ duration: 0.6 }}
+					className="text-5xl font-semibold text-slate-900 tracking-tight">
+					What Our Clients Say
+				</motion.h2>
 
-					<motion.h2
-						variants={item}
-						className="mt-3 text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl lg:text-[2.1rem]">
-						Real homes,{" "}
-						<span className="italic" style={{ color: ACCENT }}>
-							real stories
-						</span>
-						.
-					</motion.h2>
+				<p className="mt-4 text-slate-500 text-sm">
+					Real experiences from homeowners
+				</p>
 
-					<motion.div
-						variants={item}
-						className="mt-3 flex items-center justify-center gap-2 text-[0.85rem] text-slate-700">
-						<div className="flex items-center gap-1 text-[0.9rem]">
-							{Array.from({ length: 5 }).map((_, i) => (
-								<FiStar
-									key={i}
-									className="h-4 w-4"
-									style={{ color: STAR_GOLD }}
-								/>
-							))}
-						</div>
-						<span className="text-slate-500">5.0★ average project rating</span>
-					</motion.div>
+				{/* CARD */}
+				<div
+					className="mt-20 relative"
+					onMouseEnter={() => setPaused(true)}
+					onMouseLeave={() => setPaused(false)}>
+					<AnimatePresence mode="wait">
+						<motion.div
+							key={current.name}
+							initial={{ opacity: 0, y: 60, scale: 0.95 }}
+							animate={{ opacity: 1, y: 0, scale: 1 }}
+							exit={{ opacity: 0, y: -60, scale: 0.95 }}
+							transition={{ duration: 0.5 }}
+							className="mx-auto max-w-3xl rounded-[32px] border border-white/40 bg-white/70 backdrop-blur-2xl p-12 shadow-[0_40px_100px_rgba(0,0,0,0.2)]">
+							{/* QUOTE */}
+							<div className="text-7xl text-[#447f80]/20 font-serif">“</div>
 
-					{/* main card */}
-					<motion.div
-						variants={item}
-						whileHover={{
-							y: -6,
-							rotateX: 2,
-							rotateY: -2,
-						}}
-						transition={{ type: "spring", stiffness: 170, damping: 18 }}
-						style={{ transformPerspective: 1200 }}
-						className="mt-10 w-full">
-						<div className="relative mx-auto max-w-3xl overflow-hidden rounded-3xl border border-slate-200 bg-white/95 p-6 shadow-[0_18px_55px_rgba(15,23,42,0.14)] backdrop-blur-md sm:p-8">
-							{/* glow on hover */}
-							<div
-								className="pointer-events-none absolute inset-0 rounded-3xl opacity-0 transition-opacity duration-300 hover:opacity-100"
-								style={{
-									boxShadow: `0 0 0 1px ${ACCENT}26, 0 22px 60px ${ACCENT}24`,
-								}}
-							/>
+							<p className="mt-4 text-2xl font-medium text-slate-800 leading-relaxed">
+								{current.quote}
+							</p>
 
-							{/* content with AnimatePresence */}
-							<AnimatePresence mode="wait">
-								<motion.div
-									key={activeReview.name}
-									variants={slideVariants}
-									initial="enter"
-									animate="center"
-									exit="exit"
-									className="relative z-10 flex flex-col items-center text-center">
-									{/* avatar */}
-									<div className="relative mb-4 h-16 w-16 sm:h-20 sm:w-20">
-										<div className="absolute inset-0 rounded-full bg-[conic-gradient(from_140deg_at_50%_0%,#f5b544,#447f80,#f5b544)] opacity-70 blur-[10px]" />
-										<div className="relative h-full w-full overflow-hidden rounded-full border border-white bg-slate-200 shadow-[0_10px_30px_rgba(15,23,42,0.25)]">
-											{/* <Image
-												src={activeReview.avatar}
-												alt={activeReview.name}
-												fill
-												className="object-cover"
-											/> */}
-											<IoPerson className="h-full w-full rounded-full" />
-										</div>
-									</div>
-
-									{/* stars small under avatar (mobile highlight) */}
-									<div className="mb-2 flex items-center justify-center gap-0.5 sm:hidden">
-										{Array.from({ length: 5 }).map((_, i) => (
-											<FiStar
-												key={i}
-												className="h-3.5 w-3.5"
-												style={{ color: STAR_GOLD }}
-											/>
-										))}
-									</div>
-
-									<p className="mt-2 text-[0.95rem] leading-relaxed text-slate-700 sm:text-base">
-										“{activeReview.quote}”
-									</p>
-
-									<div className="mt-6 border-t border-slate-200 pt-4">
-										<p className="text-[0.95rem] font-semibold text-slate-900">
-											{activeReview.name}
-										</p>
-										<p className="mt-0.5 text-[0.78rem] uppercase tracking-[0.18em] text-slate-500">
-											{activeReview.role}
-										</p>
-									</div>
-								</motion.div>
-							</AnimatePresence>
-
-							{/* controls & dots */}
-							<div className="mt-6 flex items-center justify-between gap-4">
-								<div className="flex items-center gap-2">
-									<button
-										type="button"
-										onClick={goPrev}
-										className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-[0.8rem] text-slate-600 transition hover:border-[#447f80] hover:text-[#447f80]">
-										<FiChevronLeft className="h-4 w-4" />
-									</button>
-									<button
-										type="button"
-										onClick={goNext}
-										className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-[0.8rem] text-slate-600 transition hover:border-[#447f80] hover:text-[#447f80]">
-										<FiChevronRight className="h-4 w-4" />
-									</button>
-								</div>
-
-								<div className="flex items-center gap-2">
-									{REVIEWS.map((review, i) => (
-										<button
-											key={review.name}
-											type="button"
-											onClick={() => setActiveIndex(i)}
-											className="relative flex items-center justify-center">
-											<div
-												className={`h-2.5 rounded-full bg-slate-300/80 transition-all duration-300 ${
-													i === activeIndex ? "w-6 bg-[#447f80]" : "w-2.5"
-												}`}
-											/>
-										</button>
-									))}
-									<span className="ml-2 text-[0.75rem] text-slate-500">
-										{activeIndex + 1} / {REVIEWS.length}
-									</span>
-								</div>
+							{/* STARS */}
+							<div className="flex justify-center gap-1 mt-5">
+								{Array.from({ length: 5 }).map((_, i) => (
+									<FaStar
+										key={i}
+										className={`${
+											i < current.rating ? "text-[#447f80]" : "text-gray-300"
+										} text-lg`}
+									/>
+								))}
 							</div>
-						</div>
-					</motion.div>
 
-					{/* bottom note */}
-					<motion.p
-						variants={item}
-						className="mt-6 max-w-2xl text-[0.85rem] text-slate-600">
-						Most of our projects come through referrals and repeat
-						collaborations — a quiet but strong endorsement from the families
-						and teams we work with.
-					</motion.p>
-				</motion.div>
+							{/* PROFILE */}
+							<div className="mt-10 flex flex-col items-center">
+								<div className="h-16 w-16 rounded-full bg-gradient-to-br from-[#447f80] to-[#5fa3a5] text-white flex items-center justify-center text-xl font-semibold shadow-xl">
+									{current.name.charAt(0)}
+								</div>
+
+								<p className="mt-3 font-semibold text-lg text-slate-900">
+									{current.name}
+								</p>
+
+								<p className="text-xs uppercase tracking-wide text-slate-500">
+									{current.role}
+								</p>
+							</div>
+						</motion.div>
+					</AnimatePresence>
+
+					{/* ARROWS */}
+					<button
+						onClick={prev}
+						className="absolute left-0 top-1/2 -translate-y-1/2 bg-white/80 backdrop-blur p-3 rounded-full shadow hover:scale-110 transition">
+						<IoChevronBack />
+					</button>
+
+					<button
+						onClick={next}
+						className="absolute right-0 top-1/2 -translate-y-1/2 bg-white/80 backdrop-blur p-3 rounded-full shadow hover:scale-110 transition">
+						<IoChevronForward />
+					</button>
+
+					{/* DOTS */}
+					<div className="mt-10 flex justify-center gap-3">
+						{TESTIMONIALS.map((_, i) => (
+							<button
+								key={i}
+								onClick={() => setActive(i)}
+								className={`transition-all duration-300 ${
+									i === active ? "w-10 h-2 bg-[#447f80]" : "w-2 h-2 bg-gray-300"
+								} rounded-full`}
+							/>
+						))}
+					</div>
+				</div>
 			</div>
 		</section>
 	);

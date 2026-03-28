@@ -79,22 +79,17 @@ export default function HeroBanner() {
 		<section
 			className="
 				relative w-full 
-				min-h-[70vh]          /* mobile: smaller hero */
-				sm:min-h-[80vh]       /* small tablets */
-				md:min-h-dvh   /* desktops: full height */
+				min-h-[70vh]
+				sm:min-h-[80vh]
+				md:min-h-dvh
 				overflow-hidden
 			">
-			{/* Background slider */}
+			{/* Background Slider */}
 			<div className="absolute inset-0 z-0">
 				<Slider
 					ref={sliderRef}
 					{...settings}
-					className="
-						hero-slider 
-						h-[70vh] 
-						sm:h-[80vh] 
-						md:h-dvh
-					">
+					className="h-[70vh] sm:h-[80vh] md:h-dvh">
 					{slides.map((slide) => (
 						<div key={slide.id} className="h-[70vh] sm:h-[80vh] md:h-dvh">
 							<div className="relative h-full w-full">
@@ -106,15 +101,13 @@ export default function HeroBanner() {
 									priority={slide.id === 0}
 									className="object-cover"
 								/>
-								{/* dark overlay for text readability */}
-								{/* <div className="absolute inset-0 bg-black/40" />x	 */}
 							</div>
 						</div>
 					))}
 				</Slider>
 			</div>
 
-			{/* TEXT LEFT */}
+			{/* Content */}
 			<div
 				className="
 					relative z-20 flex 
@@ -139,28 +132,33 @@ export default function HeroBanner() {
 							<p className="mb-3 text-[0.75rem] font-semibold uppercase tracking-[0.3em] text-white drop-shadow-lg">
 								Kasa Interiors
 							</p>
+
 							<h1 className="text-3xl font-bold leading-tight text-white drop-shadow-2xl sm:text-4xl md:text-5xl lg:text-6xl">
 								{current.title}
 							</h1>
+
 							<p className="mt-4 max-w-lg text-sm text-white/90 drop-shadow-md sm:text-base md:text-lg">
 								{current.subtitle}
 							</p>
+
+							{/* ✅ BUTTON → REDIRECTS TO GALLERY */}
 							<Link href="/gallery">
 								<motion.button
 									whileHover={{ scale: 1.05 }}
 									whileTap={{ scale: 0.96 }}
-									className="mt-6 inline-flex items-center gap-2 rounded-full bg-white px-7 py-3 text-sm font-semibold text-slate-900 shadow-lg">
+									className="mt-6 inline-flex items-center gap-2 rounded-full bg-white px-7 py-3 text-sm font-semibold text-slate-900 shadow-lg hover:bg-[#447f80] hover:text-white transition">
 									See Our Latest Makeovers →
 								</motion.button>
 							</Link>
-							{/* dark overlay for text readability */}
-							<div className="absolute inset-0 bg-black/5" />
+
+							{/* subtle overlay */}
+							<div className="absolute inset-0 bg-black/5 pointer-events-none" />
 						</motion.div>
 					)}
 				</AnimatePresence>
 			</div>
 
-			{/* Right-side dots */}
+			{/* Right Side Dots */}
 			<div className="absolute right-4 top-1/2 z-30 flex -translate-y-1/2 flex-col gap-2 sm:right-6">
 				{slides.map((s, i) => (
 					<button

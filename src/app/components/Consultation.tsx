@@ -6,8 +6,11 @@ import Step1 from "@/app/components/steps/step1";
 import Step2 from "@/app/components/steps/step2";
 import Step3 from "@/app/components/steps/step3";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Consultation() {
+	const router = useRouter();
+
 	const {
 		step,
 		setStep,
@@ -56,8 +59,12 @@ export default function Consultation() {
 
 			alert("Request sent successfully 🚀");
 
+			// ✅ Reset state
 			reset();
 			setStep(1);
+
+			// ✅ Redirect to home
+			router.push("/");
 		} catch (err) {
 			alert("Something went wrong");
 		} finally {

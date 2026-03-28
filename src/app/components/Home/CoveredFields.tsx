@@ -156,11 +156,6 @@ export default function CoveredFieldsSection() {
 										<span className="rounded-full bg-slate-50 px-3 py-1">
 											Detail-driven execution
 										</span>
-										<span
-											className="text-xs font-semibold uppercase tracking-[0.16em]"
-											style={{ color: ACCENT }}>
-											View details
-										</span>
 									</div>
 								</div>
 							</motion.article>

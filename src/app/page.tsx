@@ -19,11 +19,12 @@ function page() {
 			<CoveredFields />
 			<HowItWorks />
 			<WhyChooseKasa />
+			<Reviews />
+
 			<Steps />
 			<InteriorSolutions />
 			<WhyKasa />
 			{/* <FeaturedProjects /> */}
-			<Reviews />
 			{/* <BrandsWeUse /> */}
 		</>
 	);

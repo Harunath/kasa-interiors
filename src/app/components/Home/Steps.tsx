@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 const ACCENT = "#447f80";
 
@@ -97,12 +98,12 @@ export default function ThreeStepSection() {
 														backgroundColor: ACCENT,
 														color: "white",
 														boxShadow: "0 8px 20px rgba(68,127,128,0.45)",
-												  }
+													}
 												: {
 														backgroundColor: "white",
 														color: "#4b5563",
 														border: "1px solid #e5e7eb",
-												  }
+													}
 										}>
 										{step.id}
 									</div>
@@ -138,13 +139,16 @@ export default function ThreeStepSection() {
 			</div>
 
 			{/* CTA */}
+
 			<div className="mt-10 flex justify-center">
-				<button
-					type="button"
-					className="rounded-full px-8 py-3 text-sm font-semibold text-white shadow-lg transition-all hover:translate-y-px hover:shadow-xl"
-					style={{ backgroundColor: ACCENT }}>
-					Book Free Design Session
-				</button>
+				<Link href="/consultation">
+					<button
+						type="button"
+						className="rounded-full px-8 py-3 text-sm font-semibold text-white shadow-lg transition-all hover:translate-y-px hover:shadow-xl"
+						style={{ backgroundColor: ACCENT }}>
+						Book Free Design Session
+					</button>
+				</Link>
 			</div>
 		</section>
 	);
