@@ -188,7 +188,7 @@ export default function Motto() {
 									<motion.a
 										whileHover={{ y: -2, scale: 1.02 }}
 										whileTap={{ scale: 0.97 }}
-										href="/portfolio"
+										href="/gallery"
 										className="inline-flex items-center gap-2 rounded-full border border-white/70 bg-[#447f80]/20 px-5 py-2.5 text-sm font-medium text-white backdrop-blur">
 										View Portfolio
 										<FiImage className="h-4 w-4" />
