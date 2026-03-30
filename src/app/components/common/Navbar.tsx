@@ -121,7 +121,7 @@ export default function Navbar() {
 								whileHover={{ scale: 1.04, y: -1 }}
 								whileTap={{ scale: 0.97 }}
 								className="group inline-flex items-center gap-2 rounded-full border border-[#447f80] bg-[#447f80] px-5 py-2 text-[0.7rem] font-semibold uppercase tracking-[0.24em] text-white shadow-[0_10px_30px_rgba(68,127,128,0.45)]">
-								<span>Book Consultation</span>
+								<span>Free Estimate</span>
 								<motion.span whileHover={{ x: 2 }} className="text-[0.75rem]">
 									↗
 								</motion.span>
@@ -212,7 +212,7 @@ export default function Navbar() {
 											whileTap={{ scale: 0.98 }}
 											onClick={() => setMenuOpen(false)}
 											className="flex w-full items-center justify-center rounded-2xl border border-[#447f80] bg-[#447f80] px-4 py-3 text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-white shadow-[0_10px_30px_rgba(68,127,128,0.45)]">
-											Book Consultation
+											Free Estimate
 										</motion.button>
 									</Link>
 								</div>
